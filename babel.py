@@ -1,4 +1,4 @@
-""" Duree: an experiment in linguistics.
+"""
 This module procedurally generates a body of text following basic English
 phrase structure rules. It writes the text to an HTML file.
 TODO:
