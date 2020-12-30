@@ -2,23 +2,28 @@
 This module procedurally generates a body of text following basic English
 phrase structure rules. It writes the text to an HTML file.
 TODO:
-    * Modulate phrases
+    * Modulate words
+    * Generate large words arrays from files
     * Include prep phrases
 NOTES:
     *
 """
 import webbrowser
 import random
+import words
 
 
 class Book:
     def __init__(self, num_chapters):
-        """init the class"""
+        """init Book class"""
         self.num_chapters = num_chapters
+
+        w = words.Word()
+        self.adjectives = w.gen_adjectives()
+        self.adverbs = w.gen_adverbs()
+        self.nouns = w.gen_nouns()
+        self.verbs = w.gen_verbs()
         self.articles = ["the", "a", "one"]
-        self.adjectives = ["talented", "green", "fast", "slow", "dark"]
-        self.nouns = ["boy", "girl", "cat", "king", "squid"]
-        self.verbs = ["ate", "drank", "dreamed", "wrote", "read"]
 
     def gen_book(self):
         """generate book"""
@@ -39,13 +44,13 @@ class Book:
 
     def gen_chapter(self):
         """generate chapter"""
-        num_paragraphs = random.randrange(20, 30)
+        num_paragraphs = random.randrange(30, 50)
         paragraphs = [self.gen_paragraph() for i in range(num_paragraphs)]
         return "\n".join(paragraphs)
 
     def gen_paragraph(self):
         """generate paragraph"""
-        num_sentences = random.randrange(5, 8)
+        num_sentences = random.randrange(8, 13)
         sentences = [self.gen_sentence() for i in range(num_sentences)]
         return "<p>{0}</p>".format(" ".join(sentences))
 
@@ -66,7 +71,8 @@ class Book:
         """generate verb phrase"""
         verb = random.choice(self.verbs)
         noun_phrase = self.gen_noun_phrase()
-        return "{0} {1}".format(verb, noun_phrase)
+        adverb = random.choice(self.adverbs)
+        return "{0} {1} {2}".format(verb, noun_phrase, adverb)
 
 
 if __name__ == '__main__':
